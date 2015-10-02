@@ -6,7 +6,7 @@ import org.easyrules.annotation.Action;
 import org.easyrules.annotation.Condition;
 import org.easyrules.annotation.Rule;
 
-@Rule(name = "AmHungry rule", description = "Find the best restaurant")
+@Rule(name = "OpenTime rule", description = "Select opening restaurant in current time")
 public class OpenTimeRule {
 	
 	private Restaurant restaurant;
@@ -17,6 +17,8 @@ public class OpenTimeRule {
 	
 	@Condition
     public boolean isOpen() {
+//		System.out.println(restaurant.getOpen_time().compareTo(LocalTime.now()) <= 0 && restaurant.getClose_time().compareTo(LocalTime.now()) > 0);
+//		System.out.println(restaurant.getOpen_time() + " " + restaurant.getClose_time() + " " + LocalTime.now());
         return restaurant.getOpen_time().compareTo(LocalTime.now()) <= 0 && restaurant.getClose_time().compareTo(LocalTime.now()) > 0;
     }
 	

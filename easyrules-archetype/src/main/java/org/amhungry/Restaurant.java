@@ -11,6 +11,7 @@ public class Restaurant {
 	private LocalTime close_time;
 	private String type;
 	private double pos_x, pos_y; //Position of restaurant on GPS
+	private double rc_point; //Restaurant choice point
 	
 	public Restaurant(String name, double price, double distance, LocalTime open_time, LocalTime close_time) {
 		this.name = name;
@@ -24,6 +25,9 @@ public class Restaurant {
 	public double getPrice() { return price; }
 	public LocalTime getOpen_time() { return open_time; }
 	public LocalTime getClose_time() { return close_time; }
+	
+	public void setRC(double d){ this.rc_point = d; }
+	public double getRC(){ return rc_point; }
 	
 	//Using later
 	public double getPos_x() { return pos_x; }

@@ -21,11 +21,19 @@ public class Launcher {
 		resultList.add(restaurant);
 	}
 	
+	private static void calculateRC_List(){
+		for(int i = 0; i < resultList.size(); i++){
+			RCFormula formula = new RCFormula(resultList.get(i));
+//			System.out.println("RC: " + formula.getRC());
+			resultList.get(i).setRC(formula.getRC());
+		}
+	}
+	
     public static void main(String[] args) {
     	
     	Restaurant rest_a = new Restaurant("Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0));
-    	Restaurant rest_b = new Restaurant("Sam", 120, 0.5, LocalTime.of(16, 0), LocalTime.of(22, 0));
-    	Restaurant rest_c = new Restaurant("Steak Home", 110, 0.25, LocalTime.of(18, 0), LocalTime.of(22, 0));
+    	Restaurant rest_b = new Restaurant("Sam", 120, 0.5, LocalTime.of(12, 0), LocalTime.of(22, 0));
+    	Restaurant rest_c = new Restaurant("Steak Home", 110, 0.25, LocalTime.of(13, 0), LocalTime.of(22, 0));
     	
     	ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
     	restaurantList.add(rest_a);
@@ -42,8 +50,10 @@ public class Launcher {
         	rulesEngine.fireRules();
         }
     	
+        calculateRC_List();
+        
         for(int i = 0; i < resultList.size(); i++){
-        	System.out.println(resultList.get(i).getName());
+        	System.out.println(resultList.get(i).getName()+ " " +resultList.get(i).getRC());
         }
         
     	
