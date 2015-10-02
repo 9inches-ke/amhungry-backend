@@ -2,6 +2,9 @@ package org.easyrules;
 
 import org.easyrules.api.RulesEngine;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 
 import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
@@ -12,7 +15,7 @@ import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
 public class Launcher {
 
     public static void main(String[] args) {
-
+    	
         Scanner scanner = new Scanner(System.in);
         System.out.println("Are you a friend of duke? [yes/no]:");
         String input = scanner.nextLine();
