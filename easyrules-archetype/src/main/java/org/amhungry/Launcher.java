@@ -15,6 +15,12 @@ import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
  */
 public class Launcher {
 
+	private static ArrayList<Restaurant> resultList = new ArrayList<Restaurant>();
+	
+	public static void add(Restaurant restaurant){
+		resultList.add(restaurant);
+	}
+	
     public static void main(String[] args) {
     	
     	Restaurant rest_a = new Restaurant("Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0));
@@ -26,7 +32,20 @@ public class Launcher {
     	restaurantList.add(rest_b);
     	restaurantList.add(rest_c);
     	
+    	//create a rules engine
+        RulesEngine rulesEngine = aNewRulesEngine().build();
+        OpenTimeRule openTime = new OpenTimeRule();
+        rulesEngine.registerRule(openTime);
+        
+        for(int i = 0; i < restaurantList.size(); i++){
+        	openTime.setInput(restaurantList.get(i));
+        	rulesEngine.fireRules();
+        }
     	
+        for(int i = 0; i < resultList.size(); i++){
+        	System.out.println(resultList.get(i).getName());
+        }
+        
     	
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Are you a friend of duke? [yes/no]:");

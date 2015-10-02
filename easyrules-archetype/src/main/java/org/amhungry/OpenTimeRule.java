@@ -11,13 +11,18 @@ public class OpenTimeRule {
 	
 	private Restaurant restaurant;
 	
-	public OpenTimeRule(Restaurant restaurant){
+	public void setInput(Restaurant restaurant){
 		this.restaurant = restaurant;
 	}
 	
 	@Condition
     public boolean isOpen() {
-        return restaurant.getOpen_time().compareTo(LocalTime.now()) >= 0 && restaurant.getClose_time().compareTo(LocalTime.now()) < 0;
+        return restaurant.getOpen_time().compareTo(LocalTime.now()) <= 0 && restaurant.getClose_time().compareTo(LocalTime.now()) > 0;
     }
+	
+	@Action
+	public void addRestaurant(){
+		Launcher.add(restaurant);
+	}
 	
 }
