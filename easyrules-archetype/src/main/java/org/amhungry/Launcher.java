@@ -28,6 +28,20 @@ public class Launcher {
 			resultList.get(i).setRC(formula.getRC());
 		}
 	}
+	public static ArrayList<Restaurant> sortArray(ArrayList<Restaurant> list){
+		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
+		result.add(list.get(0));
+		for(Restaurant a : list){
+			for(int i=0;i<result.size();i++){
+				if(result.get(i).getRC()<a.getRC()){
+					result.add(i, a);
+					break;
+				}
+			}
+		}
+		return result;
+	}
+	
 	
     public static void main(String[] args) {
     	
@@ -51,6 +65,8 @@ public class Launcher {
         }
     	
         calculateRC_List();
+        
+        resultList = sortArray(resultList);
         
         for(int i = 0; i < resultList.size(); i++){
         	System.out.println(resultList.get(i).getName()+ " " +resultList.get(i).getRC());
