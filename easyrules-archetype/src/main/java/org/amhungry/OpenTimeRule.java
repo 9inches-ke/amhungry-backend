@@ -16,15 +16,15 @@ public class OpenTimeRule {
 	}
 	
 	@Condition
-    public boolean isOpen() {
+    public boolean isNotOpen() {
 //		System.out.println(restaurant.getOpen_time().compareTo(LocalTime.now()) <= 0 && restaurant.getClose_time().compareTo(LocalTime.now()) > 0);
 //		System.out.println(restaurant.getOpen_time() + " " + restaurant.getClose_time() + " " + LocalTime.now());
-        return restaurant.getOpen_time().compareTo(LocalTime.now()) <= 0 && restaurant.getClose_time().compareTo(LocalTime.now()) > 0;
+        return !(restaurant.getOpen_time().compareTo(LocalTime.now()) <= 0 && restaurant.getClose_time().compareTo(LocalTime.now()) > 0);
     }
 	
 	@Action
-	public void addRestaurant(){
-		Launcher.add(restaurant);
+	public void deselect(){
+		Launcher.removeRestaurant(restaurant);
 	}
 	
 }

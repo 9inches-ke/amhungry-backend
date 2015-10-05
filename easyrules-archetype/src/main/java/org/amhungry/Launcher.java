@@ -15,17 +15,17 @@ import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
  */
 public class Launcher {
 
-	private static ArrayList<Restaurant> resultList = new ArrayList<Restaurant>();
+	private static ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
 	
-	public static void add(Restaurant restaurant){
-		resultList.add(restaurant);
+	public static void removeRestaurant(Restaurant restaurant){
+		restaurantList.remove(restaurant);
 	}
 	
 	private static void calculateRC_List(){
-		for(int i = 0; i < resultList.size(); i++){
-			RCFormula formula = new RCFormula(resultList.get(i));
+		for(int i = 0; i < restaurantList.size(); i++){
+			RCFormula formula = new RCFormula(restaurantList.get(i));
 //			System.out.println("RC: " + formula.getRC());
-			resultList.get(i).setRC(formula.getRC());
+			restaurantList.get(i).setRC(formula.getRC());
 		}
 	}
 	public static ArrayList<Restaurant> sortArray(ArrayList<Restaurant> list){
@@ -47,9 +47,8 @@ public class Launcher {
     	
     	Restaurant rest_a = new Restaurant("Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0));
     	Restaurant rest_b = new Restaurant("Sam", 120, 0.5, LocalTime.of(12, 0), LocalTime.of(22, 0));
-    	Restaurant rest_c = new Restaurant("Steak Home", 110, 0.25, LocalTime.of(13, 0), LocalTime.of(22, 0));
+    	Restaurant rest_c = new Restaurant("Steak Home", 110, 0.25, LocalTime.of(16, 0), LocalTime.of(22, 0));
     	
-    	ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
     	restaurantList.add(rest_a);
     	restaurantList.add(rest_b);
     	restaurantList.add(rest_c);
@@ -66,38 +65,8 @@ public class Launcher {
     	
         calculateRC_List();
         
-        resultList = sortArray(resultList);
-        
-        for(int i = 0; i < resultList.size(); i++){
-        	System.out.println(resultList.get(i).getName()+ " " +resultList.get(i).getRC());
+        for(int i = 0; i < restaurantList.size(); i++){
+        	System.out.println(restaurantList.get(i).toString());
         }
-        
-    	
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Are you a friend of duke? [yes/no]:");
-//        String input = scanner.nextLine();
-//
-//        /**
-//         * Declare the rule
-//         */
-//        HelloWorldRule helloWorldRule = new HelloWorldRule();
-//
-//        /**
-//         * Set business data to operate on
-//         */
-//        helloWorldRule.setInput(input.trim());
-//
-//        /**
-//         * Create a rules engine and register the business rule
-//         */
-//        RulesEngine rulesEngine = aNewRulesEngine().build();
-//
-//        rulesEngine.registerRule(helloWorldRule);
-//
-//        /**
-//         * Fire rules
-//         */
-//        rulesEngine.fireRules();
-
     }
 }
