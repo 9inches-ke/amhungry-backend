@@ -23,7 +23,7 @@ public class OpenTimeRule {
     }
 	
 	@Action
-	public void deselect(){
+	public void removeRestaurant(){
 		Launcher.removeRestaurant(restaurant);
 	}
 	

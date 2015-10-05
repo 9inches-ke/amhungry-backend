@@ -16,12 +16,12 @@ public class DistanceRule {
 	}
 	
 	@Condition
-    public boolean isNear() {
-        return restaurant.getDistance() < 1;
+    public boolean isNotNear() {
+        return !(restaurant.getDistance() < 1);
     }
 	
-//	@Action
-//	public void addRestaurant(){
-//		Launcher.add(restaurant);
-//	}
+	@Action
+	public void removeRestaurant(){
+		Launcher.removeRestaurant(restaurant);
+	}
 }

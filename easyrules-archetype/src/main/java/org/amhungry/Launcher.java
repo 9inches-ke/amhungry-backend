@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.util.function.UnaryOperator;
 
 import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
 
@@ -28,18 +29,18 @@ public class Launcher {
 			restaurantList.get(i).setRC(formula.getRC());
 		}
 	}
-	public static ArrayList<Restaurant> sortArray(ArrayList<Restaurant> list){
-		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
-		result.add(list.get(0));
-		for(Restaurant a : list){
-			for(int i=0;i<result.size();i++){
-				if(result.get(i).getRC()<a.getRC()){
-					result.add(i, a);
+	public static void sortArray(){
+		ArrayList<Restaurant> tempList = new ArrayList<Restaurant>();
+		tempList.add(restaurantList.get(0));
+		for(Restaurant a : restaurantList){
+			for(int i=0;i<tempList.size();i++){
+				if(tempList.get(i).getRC()<a.getRC()){
+					tempList.add(i, a);
 					break;
 				}
 			}
 		}
-		return result;
+		restaurantList = tempList;
 	}
 	
 	
@@ -58,15 +59,18 @@ public class Launcher {
         OpenTimeRule openTime = new OpenTimeRule();
         rulesEngine.registerRule(openTime);
         
+        
         for(int i = 0; i < restaurantList.size(); i++){
         	openTime.setInput(restaurantList.get(i));
         	rulesEngine.fireRules();
         }
     	
         calculateRC_List();
-        
+        sortArray();
         for(int i = 0; i < restaurantList.size(); i++){
         	System.out.println(restaurantList.get(i).toString());
         }
+        
+
     }
 }
