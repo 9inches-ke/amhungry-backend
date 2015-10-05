@@ -30,15 +30,6 @@ public class Launcher {
 			restaurantList.get(i).setRC(formula.getRC());
 		}
 	}
-	private static void calculateTime(LocalTime time){
-		for(int i = 0; i < restaurantList.size(); i++){
-			if( restaurantList.get(i).getOpen_time().isAfter(time)|| 
-					restaurantList.get(i).getClose_time().isBefore(time))
-			{
-				restaurantList.remove(restaurantList.get(i));
-			}
-		}
-	}
 	
 	public static void sortArray(){
 		ArrayList<Restaurant> tempList = new ArrayList<Restaurant>();
@@ -75,9 +66,9 @@ public class Launcher {
         	openTime.setInput(restaurantList.get(i));
         	rulesEngine.fireRules();
         }
+        System.out.println("test git");
     	
         calculateRC_List();
-        calculateTime(LocalTime.of(12, 0));
         sortArray();
         for(int i = 0; i < restaurantList.size(); i++){
         	System.out.println(restaurantList.get(i).toString());
