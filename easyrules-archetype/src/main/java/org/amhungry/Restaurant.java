@@ -40,7 +40,7 @@ public class Restaurant {
 	public void setType(String type) { this.type = type; }
 	
 	public String toString() {
-		return getName() + " " + getRC();
+		return getName() + " " + getRC() + " " + getOpen_time() + " " + getClose_time();
 	}
 	
 }

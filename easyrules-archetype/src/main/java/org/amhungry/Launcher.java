@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.function.UnaryOperator;
+import java.time.LocalTime;
 
 import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
 
@@ -29,6 +30,16 @@ public class Launcher {
 			restaurantList.get(i).setRC(formula.getRC());
 		}
 	}
+	private static void calculateTime(LocalTime time){
+		for(int i = 0; i < restaurantList.size(); i++){
+			if( restaurantList.get(i).getOpen_time().isAfter(time)|| 
+					restaurantList.get(i).getClose_time().isBefore(time))
+			{
+				restaurantList.remove(restaurantList.get(i));
+			}
+		}
+	}
+	
 	public static void sortArray(){
 		ArrayList<Restaurant> tempList = new ArrayList<Restaurant>();
 		tempList.add(restaurantList.get(0));
@@ -66,6 +77,7 @@ public class Launcher {
         }
     	
         calculateRC_List();
+        calculateTime(LocalTime.of(12, 0));
         sortArray();
         for(int i = 0; i < restaurantList.size(); i++){
         	System.out.println(restaurantList.get(i).toString());
