@@ -68,6 +68,7 @@ public class Launcher {
         calculateRC_List();
         sortArray();
         for(int i = 0; i < restaurantList.size(); i++){
+        	System.out.println("Test Test");
         	System.out.println(restaurantList.get(i).toString());
         }
         
