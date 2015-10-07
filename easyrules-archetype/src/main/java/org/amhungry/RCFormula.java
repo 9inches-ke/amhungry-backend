@@ -12,11 +12,11 @@ public class RCFormula {
 	private final double wv = 1.0; //weight of vote
 	
 	//Standard value
-	private double std_price = 80;
-	private double std_distance = 0.5;
-	private double std_vote = 0.5;
+	private double std_price = Standard_Value.getSTD_price();
+	private double std_distance = Standard_Value.getSTD_dist();
+	private double max_vote = Standard_Value.getMax_vote();
 	
-	public RCFormula (Restaurant restaurant) {
+	public RCFormula (Restaurant restaurant){
 		this.price = restaurant.getPrice();
 		this.distance = restaurant.getDistance();
 		this.vote = restaurant.getVote();
@@ -34,7 +34,7 @@ public class RCFormula {
 	}
 	
 	private double calculate_v(){
-		return (vote/std_vote)*wv;
+		return (vote/max_vote)*wv;
 	}
 	
 	public double getRC(){

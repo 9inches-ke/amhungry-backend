@@ -11,7 +11,7 @@ import org.easyrules.annotation.Rule;
 
 public class DistanceRule {
 	private Restaurant restaurant;
-	private double std_dist;
+	private double std_dist = Standard_Value.getSTD_dist();
 	
 	
 	public void setInput(Restaurant restaurant){
@@ -25,11 +25,13 @@ public class DistanceRule {
 	@Condition
     public boolean isNotNear() {
 		System.out.println("Dist rule");
-        return !(restaurant.getDistance() < 1);
+		System.out.println(restaurant.getDistance() + " " + std_dist);
+        return !(restaurant.getDistance() <= std_dist);
     }
 	
 	@Action
 	public void removeRestaurant(){
+		System.out.println("Dist rule - Remove");
 		Launcher.removeRestaurant(restaurant);
 	}
 	
