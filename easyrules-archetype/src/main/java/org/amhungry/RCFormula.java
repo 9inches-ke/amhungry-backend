@@ -13,7 +13,7 @@ public class RCFormula {
 	
 	//Standard value
 	private double std_price = Standard_Value.getSTD_price();
-	private double std_distance = Standard_Value.getSTD_dist();
+	private double std_distance = Standard_Value.getSTD_distance();
 	private double max_vote = Standard_Value.getMax_vote();
 	
 	public RCFormula (Restaurant restaurant){

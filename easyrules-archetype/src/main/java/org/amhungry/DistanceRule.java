@@ -1,6 +1,5 @@
 package org.amhungry;
 
-import java.time.LocalTime;
 
 import org.easyrules.annotation.Action;
 import org.easyrules.annotation.Condition;
@@ -11,7 +10,7 @@ import org.easyrules.annotation.Rule;
 
 public class DistanceRule {
 	private Restaurant restaurant;
-	private double std_dist = Standard_Value.getSTD_dist();
+	private double std_dist = Standard_Value.getSTD_distance();
 	
 	
 	public void setInput(Restaurant restaurant){

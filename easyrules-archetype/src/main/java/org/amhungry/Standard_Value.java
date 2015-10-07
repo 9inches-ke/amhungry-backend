@@ -13,10 +13,10 @@ public class Standard_Value {
 		std_price = price;
 	}
 	
-	public static double getSTD_dist(){
+	public static double getSTD_distance(){
 		return std_distance;
 	}
-	public static void setSTD_dist(double distance){
+	public static void setSTD_distance(double distance){
 		std_distance = distance;
 	}
 	
