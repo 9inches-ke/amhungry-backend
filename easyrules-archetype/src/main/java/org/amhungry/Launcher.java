@@ -53,15 +53,12 @@ public class Launcher {
     public static void main(String[] args) {
     	
     	//Assuming restaurant
-    	Restaurant rest_a = new Restaurant("Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0));
-    	Restaurant rest_b = new Restaurant("Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0));
-    	Restaurant rest_c = new Restaurant("Steak Home", 110, 0.25, LocalTime.of(16, 0), LocalTime.of(22, 0));
-    	
-    	//Filter string array
-    	String[] filter = new String[]{"price", "distance"};
+    	Restaurant rest_a = new Restaurant("Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0), 5, "General");
+    	Restaurant rest_b = new Restaurant("Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0), 3.5, "Steak");
+    	Restaurant rest_c = new Restaurant("Steak Home", 110, 0.25, LocalTime.of(16, 0), LocalTime.of(22, 0), 4.5, "Steak");
     	
     	//Filter from user
-    	HashMap user_filter = new HashMap();
+    	HashMap<String, Double> user_filter = new HashMap<String, Double>();
     	user_filter.put("price", 70.0);
     	user_filter.put("distance", 0.5); 
     	
