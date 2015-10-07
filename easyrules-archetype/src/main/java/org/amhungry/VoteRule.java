@@ -1,7 +1,5 @@
 package org.amhungry;
 
-import java.time.LocalTime;
-
 import org.easyrules.annotation.Action;
 import org.easyrules.annotation.Condition;
 import org.easyrules.annotation.Priority;

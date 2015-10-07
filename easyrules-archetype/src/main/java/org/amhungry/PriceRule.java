@@ -1,7 +1,5 @@
 package org.amhungry;
 
-import java.time.LocalTime;
-
 import org.easyrules.annotation.Action;
 import org.easyrules.annotation.Condition;
 import org.easyrules.annotation.Priority;
@@ -12,14 +10,8 @@ public class PriceRule {
 	
 	private Restaurant restaurant;
 	private double std_price = Standard_Value.getSTD_price();
-	private int priority;
-	
 	public void setInput(Restaurant restaurant){
 		this.restaurant = restaurant;
-	}
-	
-	public void setPriority(int priority){
-		this.priority = priority;
 	}
 	
 	public void setSTD_price(Object object){
