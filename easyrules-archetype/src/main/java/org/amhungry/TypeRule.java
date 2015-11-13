@@ -10,15 +10,20 @@ import org.easyrules.annotation.Rule;
 public class TypeRule {
 	
 	private Restaurant restaurant;
+	private String std_type;
 	
 	public void setInput(Restaurant restaurant){
 		this.restaurant = restaurant;
 	}
 	
+	public void setFilterType(Object object){
+		std_type.equals(object);
+	}
+	
 	@Condition
     public boolean isNotOpen() {
 		System.out.println("Type Rule");
-        return !(restaurant.getType().equals(Standard_Value.getFilter_type()));
+        return !(restaurant.getType().equals(std_type));
     }
 	
 	@Action

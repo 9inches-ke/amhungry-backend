@@ -9,7 +9,7 @@ import org.easyrules.annotation.Rule;
 public class PriceRule {
 	
 	private Restaurant restaurant;
-	private double std_price = Standard_Value.getSTD_price();
+	private double std_price = 80;
 	public void setInput(Restaurant restaurant){
 		this.restaurant = restaurant;
 	}
@@ -21,7 +21,8 @@ public class PriceRule {
 	@Condition
     public boolean isNotCheap() {
 		System.out.println("Price rule");
-        return restaurant.getPrice() <= std_price;
+		System.out.println("STD_PRICE: " + std_price);
+        return !(restaurant.getPrice() <= std_price);
     }
 	
 	@Action

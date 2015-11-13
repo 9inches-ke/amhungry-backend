@@ -30,6 +30,8 @@ public class Launcher {
     private static VoteRule voteRule = new VoteRule();
     private static TypeRule typeRule = new TypeRule();
     
+    private static RCFormula formula;
+    
     //filter from user
     private static HashMap<String, Comparable> user_filter = new HashMap<String, Comparable>();
 	
@@ -40,8 +42,14 @@ public class Launcher {
 	
 	private static void calculateRC_List(){
 		for(int i = 0; i < restaurantList.size(); i++){
-			RCFormula formula = new RCFormula(restaurantList.get(i));
+			formula = new RCFormula(restaurantList.get(i));
 //			System.out.println("RC: " + formula.getRC());
+			if(user_filter.get("distance") != null) {
+				formula.setStd_distance((Double) user_filter.get("distance"));
+			}
+			if(user_filter.get("price") != null) {
+				formula.setStd_price((Double) user_filter.get("price"));
+			}
 			restaurantList.get(i).setRC(formula.getRC());
 		}
 	}
@@ -67,18 +75,19 @@ public class Launcher {
 	}
 	
 	private static void checkFilter(){
-		if(user_filter.containsKey("price")){
-        	Standard_Value.setSTD_price((Double) user_filter.get("price"));
-        }
         if(user_filter.containsKey("distance")){
-        	Standard_Value.setSTD_distance((Double) user_filter.get("distance"));
+        	distRule.setSTD_distance((Double) user_filter.get("distance"));
+        }
+        if(user_filter.containsKey("price")){
+        	priceRule.setSTD_price((Double) user_filter.get("price"));
+        	rulesEngine.registerRule(priceRule);
         }
         if(user_filter.containsKey("vote")){
         	voteRule.setFilterVote((Double) user_filter.get("vote"));
         	rulesEngine.registerRule(voteRule);
         }
         if(user_filter.containsKey("type")){
-        	Standard_Value.setFilter_type((String) user_filter.get("type"));
+        	typeRule.setFilterType((String) user_filter.get("type"));
         	rulesEngine.registerRule(typeRule);
         }
 	}
@@ -104,7 +113,7 @@ public class Launcher {
 	}
 	
 	public static double getDistance(double x1,double x2,double y1,double y2){
-		return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2));
+		return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2))/10;
 	}
 	public static LocalTime getTime(String time){
 		String[] temp = time.split(":");
@@ -132,6 +141,7 @@ public class Launcher {
           stmt = c.createStatement();
           ResultSet rs1 = stmt.executeQuery("SELECT * FROM restaurant_restaurant;");
           while ( rs1.next() ) {
+//        	System.out.println("distance: " + getDistance(rs1.getFloat("location_x"),us_x,rs1.getFloat("location_y"),us_y));
         	restaurantList.add(new Restaurant(rs1.getInt("id"),rs1.getString("name"),rs1.getDouble("price"),getDistance(rs1.getFloat("location_x"),us_x,rs1.getFloat("location_y"),us_y),getTime(rs1.getString("open_time")),getTime(rs1.getString("close_time")),5,rs1.getString("type")));
           }    c.close();
 
@@ -145,13 +155,13 @@ public class Launcher {
 //    	double price,vote,distance;
 //    	String type;
     	//Assuming restaurant
-    	Restaurant rest_a = new Restaurant(1,"Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0), 5, "general");
-    	Restaurant rest_b = new Restaurant(2,"Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0), 3.5, "steak");
-    	Restaurant rest_c = new Restaurant(3,"Steak Home", 110, 0.25, LocalTime.of(11, 0), LocalTime.of(22, 0), 4.5, "steak");
+    	Restaurant rest_a = new Restaurant(1,"Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0), 5, "General");
+    	Restaurant rest_b = new Restaurant(2,"Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0), 3.5, "Steak");
+    	Restaurant rest_c = new Restaurant(3,"Steak Home", 110, 0.25, LocalTime.of(11, 0), LocalTime.of(22, 0), 4.5, "Steak");
     	
-    	restaurantList.add(rest_a);
-    	restaurantList.add(rest_b);
-    	restaurantList.add(rest_c);
+//    	restaurantList.add(rest_a);
+//    	restaurantList.add(rest_b);
+//    	restaurantList.add(rest_c);
     	
 //    	//Scan
 //    	System.out.print("Price: ");
@@ -169,16 +179,16 @@ public class Launcher {
     	System.out.println("Type: "+type);*/
     	
     	//Assuming filter from user
-    	user_filter.put("price", 70.0);
-    	user_filter.put("distance", 0.5); 
-    	user_filter.put("vote", 5.0);
-    	user_filter.put("type", "Steak");
-        
+//    	user_filter.put("price", 70.0);
+//    	user_filter.put("distance", 0.5); 
+//    	user_filter.put("vote", 4.0);
+//    	user_filter.put("type", "Steak");
+ 
         //Check filter
-//        checkFilter();
+        checkFilter();
         
         //Problem solving
-//        fireRestaurantList();
+        fireRestaurantList();
         
         calculateRC_List();
         sortArray();

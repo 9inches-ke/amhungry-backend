@@ -10,7 +10,7 @@ import org.easyrules.annotation.Rule;
 
 public class DistanceRule {
 	private Restaurant restaurant;
-	private double std_dist = Standard_Value.getSTD_distance();
+	private double std_dist = 0.5;
 	
 	
 	public void setInput(Restaurant restaurant){
