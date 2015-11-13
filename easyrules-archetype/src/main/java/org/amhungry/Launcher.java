@@ -141,9 +141,9 @@ public class Launcher {
         }
         System.out.println("Operation done successfully");
     	
-    	Scanner scan = new Scanner(System.in);
-    	double price,vote,distance;
-    	String type;
+//    	Scanner scan = new Scanner(System.in);
+//    	double price,vote,distance;
+//    	String type;
     	//Assuming restaurant
     	Restaurant rest_a = new Restaurant(1,"Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0), 5, "general");
     	Restaurant rest_b = new Restaurant(2,"Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0), 3.5, "steak");
@@ -153,15 +153,15 @@ public class Launcher {
     	restaurantList.add(rest_b);
     	restaurantList.add(rest_c);
     	
-    	//Scan
-    	System.out.print("Price: ");
-    	price = scan.nextDouble();
-    	System.out.print("Distance: ");
-    	distance = scan.nextDouble();
-    	System.out.print("Vote: ");
-    	vote = scan.nextDouble();
-    	System.out.print("Type: ");
-    	type = scan.next();
+//    	//Scan
+//    	System.out.print("Price: ");
+//    	price = scan.nextDouble();
+//    	System.out.print("Distance: ");
+//    	distance = scan.nextDouble();
+//    	System.out.print("Vote: ");
+//    	vote = scan.nextDouble();
+//    	System.out.print("Type: ");
+//    	type = scan.next();
     	
     	/*System.out.println("Price: "+price);
     	System.out.println("Distance: "+distance);
@@ -169,16 +169,16 @@ public class Launcher {
     	System.out.println("Type: "+type);*/
     	
     	//Assuming filter from user
-    	user_filter.put("price", price);
-    	user_filter.put("distance", distance); 
-    	user_filter.put("vote", vote);
-    	user_filter.put("type", type);
+    	user_filter.put("price", 70.0);
+    	user_filter.put("distance", 0.5); 
+    	user_filter.put("vote", 5.0);
+    	user_filter.put("type", "Steak");
         
         //Check filter
-        checkFilter();
+//        checkFilter();
         
         //Problem solving
-        fireRestaurantList();
+//        fireRestaurantList();
         
         calculateRC_List();
         sortArray();
