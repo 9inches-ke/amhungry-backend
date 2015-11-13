@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,13 +102,48 @@ public class Launcher {
         }
 	}
 	
+	public static double getDistance(double x1,double x2,double y1,double y2){
+		return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2));
+	}
+	public static LocalTime getTime(String time){
+		String[] temp = time.split(":");
+		return LocalTime.of(Integer.parseInt(temp[0]),Integer.parseInt(temp[1]));
+	}
 	
     public static void main(String[] args) {
+        //wait for real input vai terminal
+    	String input = "Jae,seafood,100,13,100";
+    	String[] us_input = input.split(",");
+    	String name = us_input[0];
+    	String type = us_input[1];
+    	int price = Integer.parseInt(us_input[2]);
+    	double us_x = Double.parseDouble(us_input[3]);
+    	double us_y = Double.parseDouble(us_input[4]);
+    	
+    	Connection c = null;
+        Statement stmt = null;
+        try {
+          Class.forName("org.sqlite.JDBC");
+          c = DriverManager.getConnection("jdbc:sqlite:db.sqlite3");
+          c.setAutoCommit(false);
+
+          
+          stmt = c.createStatement();
+          ResultSet rs1 = stmt.executeQuery("SELECT * FROM restaurant_restaurant;");
+          while ( rs1.next() ) {
+        	restaurantList.add(new Restaurant(rs1.getInt("id"),rs1.getString("name"),rs1.getDouble("price"),getDistance(rs1.getFloat("location_x"),us_x,rs1.getFloat("location_y"),us_y),getTime(rs1.getString("open_time")),getTime(rs1.getString("close_time")),5,rs1.getString("type")));
+          }    c.close();
+
+        } catch ( Exception e ) {
+          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+          System.exit(0);
+        }
+        System.out.println("Operation done successfully");
     	
     	//Assuming restaurant
-    	Restaurant rest_a = new Restaurant("Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0), 5, "general");
-    	Restaurant rest_b = new Restaurant("Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0), 3.5, "steak");
-    	Restaurant rest_c = new Restaurant("Steak Home", 110, 0.25, LocalTime.of(11, 0), LocalTime.of(22, 0), 4.5, "steak");
+    	Restaurant rest_a = new Restaurant(1,"Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0), 5, "general");
+    	Restaurant rest_b = new Restaurant(2,"Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0), 3.5, "steak");
+    	Restaurant rest_c = new Restaurant(3,"Steak Home", 110, 0.25, LocalTime.of(11, 0), LocalTime.of(22, 0), 4.5, "steak");
     	
     	restaurantList.add(rest_a);
     	restaurantList.add(rest_b);
@@ -130,39 +166,5 @@ public class Launcher {
    
         printAllRestaurant();
         
-        
-        Connection c = null;
-        Statement stmt = null;
-        try {
-          Class.forName("org.sqlite.JDBC");
-          c = DriverManager.getConnection("jdbc:sqlite:db.sqlite3");
-          System.out.println("path");
-          c.setAutoCommit(false);
-          System.out.println("Opened database successfully");
-
-          stmt = c.createStatement();
-          ResultSet rs = stmt.executeQuery("SELECT name FROM sqlite_master WHERE type='table';");
-
-          while ( rs.next() ) {
-             String  name = rs.getString("name");
-             System.out.println( "NAME = " + name );
-             System.out.println();
-          }    
-
-          stmt = c.createStatement();
-          ResultSet rs1 = stmt.executeQuery("SELECT * FROM restaurant_restaurant;");
-          while ( rs1.next() ) {
-            int id = rs1.getInt("id");
-             String  name = rs1.getString("name");
-             System.out.println( "ID = " + id );
-             System.out.println( "NAME = " + name );
-             System.out.println();
-          }    c.close();
-
-        } catch ( Exception e ) {
-          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-          System.exit(0);
-        }
-        System.out.println("Operation done successfully");
     }
 }

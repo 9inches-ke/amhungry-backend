@@ -13,8 +13,10 @@ public class Restaurant {
 	private String type;
 	private double pos_x, pos_y; //Position of restaurant on GPS
 	private double rc_point; //Restaurant choice point
+	private int id;
 	
-	public Restaurant(String name, double price, double distance, LocalTime open_time, LocalTime close_time, double vote, String type) {
+	public Restaurant(int id,String name, double price, double distance, LocalTime open_time, LocalTime close_time, double vote, String type) {
+		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.distance = distance;
@@ -39,6 +41,10 @@ public class Restaurant {
 	public double getDistance() { return distance; }
 	public void setDistance(double distance) { this.distance = distance; }
 	
+	public int getId(){
+		return this.id;
+	}
+	
 	public String getType() { return type; }
 	public void setType(String type) { this.type = type; }
 	
@@ -46,7 +52,7 @@ public class Restaurant {
 	public void setVote(double vote) { this.vote = vote; }
 	
 	public String toString() {
-		return getName() + " " + getRC() + " " + getOpen_time() + " " + getClose_time();
+		return getId() + " " + getName() + " " + getPrice() + " " + getRC() + " " + getOpen_time() + " " + getClose_time();
 	}
 	
 }
