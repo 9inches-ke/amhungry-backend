@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import static org.easyrules.core.RulesEngineBuilder.aNewRulesEngine;
 
@@ -104,6 +105,9 @@ public class Launcher {
 	
     public static void main(String[] args) {
     	
+    	Scanner scan = new Scanner(System.in);
+    	double price,vote,distance;
+    	String type;
     	//Assuming restaurant
     	Restaurant rest_a = new Restaurant("Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0), 5, "general");
     	Restaurant rest_b = new Restaurant("Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0), 3.5, "steak");
@@ -113,11 +117,26 @@ public class Launcher {
     	restaurantList.add(rest_b);
     	restaurantList.add(rest_c);
     	
+    	//Scan
+    	System.out.print("Price: ");
+    	price = scan.nextDouble();
+    	System.out.print("Distance: ");
+    	distance = scan.nextDouble();
+    	System.out.print("Vote: ");
+    	vote = scan.nextDouble();
+    	System.out.print("Type: ");
+    	type = scan.next();
+    	
+    	/*System.out.println("Price: "+price);
+    	System.out.println("Distance: "+distance);
+    	System.out.println("Vote: "+vote);
+    	System.out.println("Type: "+type);*/
+    	
     	//Assuming filter from user
-    	user_filter.put("price", 70.0);
-    	user_filter.put("distance", 0.5); 
-    	user_filter.put("vote", 4.0);
-    	user_filter.put("type", "steak");
+    	user_filter.put("price", price);
+    	user_filter.put("distance", distance); 
+    	user_filter.put("vote", vote);
+    	user_filter.put("type", type);
         
         //Check filter
         checkFilter();
