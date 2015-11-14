@@ -17,7 +17,7 @@ public class TypeRule {
 	}
 	
 	public void setFilterType(Object object){
-		std_type.equals(object);
+		std_type = (String) object;
 	}
 	
 	@Condition

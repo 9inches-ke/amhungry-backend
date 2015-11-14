@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -21,7 +22,6 @@ public class Launcher {
 
 	private static ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
 	private static ArrayList<Restaurant> copyRestaurantList = new ArrayList<Restaurant>();
-	
 	//create a rules engine
     private static RulesEngine rulesEngine = aNewRulesEngine().build();
     private static OpenTimeRule openTime = new OpenTimeRule();
@@ -55,22 +55,13 @@ public class Launcher {
 	}
 	
 	public static void sortArray(){
-		ArrayList<Restaurant> tempList = new ArrayList<Restaurant>();
-		tempList.add(restaurantList.get(0));
-		for(Restaurant a : restaurantList){
-			for(int i=0;i<tempList.size();i++){
-				if(tempList.get(i).getRC()<a.getRC()){
-					tempList.add(i, a);
-					break;
-				}
-			}
-		}
-		restaurantList = tempList;
+		 Collections.sort(restaurantList);
 	}
 	
 	private static void printAllRestaurant(){
 		for(int i = 0; i < restaurantList.size(); i++){
-        	System.out.println(restaurantList.get(i).toString());
+			System.out.println(restaurantList.get(i).toString());
+//        	System.out.print(restaurantList.get(i).toStringID());
         }
 	}
 	
@@ -112,9 +103,25 @@ public class Launcher {
         }
 	}
 	
-	public static double getDistance(double x1,double x2,double y1,double y2){
-		return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2))/10;
+	public static double getDistance(double lat1, double lat2, double lng1, double lng2) 
+	{
+	  double earthRadius = 6371; // KM: use mile here if you want mile result
+
+	  double dLat = toRadian(lat2 - lat1);
+	  double dLng = toRadian(lng2 - lng1);
+
+	  double a = Math.pow(Math.sin(dLat/2), 2)+Math.cos(toRadian(lat1))*Math.cos(toRadian(lat2))*Math.pow(Math.sin(dLng/2), 2);
+
+	  double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+	  return (earthRadius * c); // returns result kilometers
 	}
+
+	public static double toRadian(double degrees) 
+	{
+	  return (degrees * Math.PI) / 180.0d;
+	}
+	
 	public static LocalTime getTime(String time){
 		String[] temp = time.split(":");
 		return LocalTime.of(Integer.parseInt(temp[0]),Integer.parseInt(temp[1]));
@@ -122,13 +129,15 @@ public class Launcher {
 	
     public static void main(String[] args) {
         //wait for real input vai terminal
-    	String input = "Jae,seafood,100,13,100";
+    	Scanner scan = new Scanner(System.in);
+    	String input = ",100,13.84,100.57,0.5";
+//    	input = scan.nextLine();
     	String[] us_input = input.split(",");
-    	String name = us_input[0];
-    	String type = us_input[1];
-    	int price = Integer.parseInt(us_input[2]);
-    	double us_x = Double.parseDouble(us_input[3]);
-    	double us_y = Double.parseDouble(us_input[4]);
+    	String type = us_input[0];
+    	double price = Double.parseDouble(us_input[1]);
+    	double us_x = Double.parseDouble(us_input[2]);
+    	double us_y = Double.parseDouble(us_input[3]);
+    	double distance = Double.parseDouble(us_input[4]);
     	
     	Connection c = null;
         Statement stmt = null;
@@ -141,7 +150,11 @@ public class Launcher {
           stmt = c.createStatement();
           ResultSet rs1 = stmt.executeQuery("SELECT * FROM restaurant_restaurant;");
           while ( rs1.next() ) {
-//        	System.out.println("distance: " + getDistance(rs1.getFloat("location_x"),us_x,rs1.getFloat("location_y"),us_y));
+        	  int id = rs1.getInt("id");
+              String  name = rs1.getString("name");
+              System.out.println( "ID = " + id );
+              System.out.println( "NAME = " + name );
+              System.out.println();
         	restaurantList.add(new Restaurant(rs1.getInt("id"),rs1.getString("name"),rs1.getDouble("price"),getDistance(rs1.getFloat("location_x"),us_x,rs1.getFloat("location_y"),us_y),getTime(rs1.getString("open_time")),getTime(rs1.getString("close_time")),5,rs1.getString("type")));
           }    c.close();
 
@@ -151,38 +164,17 @@ public class Launcher {
         }
         System.out.println("Operation done successfully");
     	
-//    	Scanner scan = new Scanner(System.in);
-//    	double price,vote,distance;
-//    	String type;
-    	//Assuming restaurant
-    	Restaurant rest_a = new Restaurant(1,"Ja-Ae", 50, 0.4, LocalTime.of(10, 0), LocalTime.of(22, 0), 5, "General");
-    	Restaurant rest_b = new Restaurant(2,"Sam", 120, 0.5, LocalTime.of(11, 0), LocalTime.of(22, 0), 3.5, "Steak");
-    	Restaurant rest_c = new Restaurant(3,"Steak Home", 110, 0.25, LocalTime.of(11, 0), LocalTime.of(22, 0), 4.5, "Steak");
-    	
-//    	restaurantList.add(rest_a);
-//    	restaurantList.add(rest_b);
-//    	restaurantList.add(rest_c);
-    	
-//    	//Scan
-//    	System.out.print("Price: ");
-//    	price = scan.nextDouble();
-//    	System.out.print("Distance: ");
-//    	distance = scan.nextDouble();
-//    	System.out.print("Vote: ");
-//    	vote = scan.nextDouble();
-//    	System.out.print("Type: ");
-//    	type = scan.next();
-    	
-    	/*System.out.println("Price: "+price);
-    	System.out.println("Distance: "+distance);
-    	System.out.println("Vote: "+vote);
-    	System.out.println("Type: "+type);*/
+
+    	//Dummy restaurant
+        Restaurant dummy = new Restaurant(0,"Null_Restaurant", 0, 0, LocalTime.of(0, 0), LocalTime.of(23,59,59), 5, type);
+    	restaurantList.add(dummy);
+
     	
     	//Assuming filter from user
-//    	user_filter.put("price", 70.0);
-//    	user_filter.put("distance", 0.5); 
-//    	user_filter.put("vote", 4.0);
-//    	user_filter.put("type", "Steak");
+    	user_filter.put("price", price);
+    	user_filter.put("distance", distance); 
+    	user_filter.put("vote", 0.0);
+    	if(!type.equals(""))user_filter.put("type", type);
  
         //Check filter
         checkFilter();
@@ -192,7 +184,9 @@ public class Launcher {
         
         calculateRC_List();
         sortArray();
-   
+        System.out.println(input);
+        System.out.println(LocalTime.now());
+//        System.out.print("|-result-| = ");
         printAllRestaurant();
         
     }

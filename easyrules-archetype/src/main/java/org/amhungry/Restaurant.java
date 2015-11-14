@@ -2,7 +2,7 @@ package org.amhungry;
 
 import java.time.LocalTime;
 
-public class Restaurant {
+public class Restaurant implements Comparable{
 	
 	private String name;
 	private double price; //This price is average in Baht
@@ -24,7 +24,7 @@ public class Restaurant {
 		this.close_time = close_time;
 		this.vote = vote;
 		this.type = type;
-	}
+	} 
 	
 	public String getName() { return name; }
 	public double getPrice() { return price; }
@@ -52,7 +52,17 @@ public class Restaurant {
 	public void setVote(double vote) { this.vote = vote; }
 	
 	public String toString() {
-		return getId() + " " + getName() + " " + getPrice() + " " + getRC() + " " + getOpen_time() + " " + getClose_time();
+		return getId() + " " + getName() + " " + getPrice() + " " +getDistance() + " " + getRC() + " " + getOpen_time() + " " + getClose_time();
+	}
+	public String toStringID() {
+		return getId()+",";
+	}
+	public int compareTo(Object comparestu) {
+		double compareage=((Restaurant)comparestu).getRC();
+		int a = (int)(compareage*10000000);
+		int b = (int)(this.rc_point*10000000);
+        /* For Ascending order*/
+        return b - a;
 	}
 	
 }
